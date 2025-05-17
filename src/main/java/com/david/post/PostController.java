@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://final-ui-ten.vercel.app"
+}) // ✅ Allow both local and deployed frontend
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = "http://localhost:5173") // Enable CORS for Vite frontend
 public class PostController {
 
     @Autowired
@@ -33,7 +36,6 @@ public class PostController {
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
     }
 
-    // ✅ Bulk upload endpoint
     @PostMapping("/bulk")
     public ResponseEntity<List<Post>> createPosts(@RequestBody List<Post> posts) {
         List<Post> savedPosts = postRepository.saveAll(posts);
